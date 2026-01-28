@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.0] - 2026-01-28
+
+### Added
+- **Draggable Settings Reordering**: Users can now reorder "Application Specific Settings" sections (LEDs, Camera, etc.) via drag-and-drop in the sidebar.
+- **Sidebar Footer**: Added a fixed footer to the sidebar containing the "Remove Component" button.
+- **Header Reset**: Added a "Reset Canvas" button to the main header toolbar for easier access.
+
+### Changed
+- **Sidebar Layout**: Expanded the "Component Library" to occupy the full height of the left panel, removing unused whitespace.
+- **Reset Button Location**: Moved "Reset Canvas" from the sidebar header to the main application toolbar (left of Preview).
+- **Remove Component Workflow**: The "Remove Component" button is now permanently located at the bottom of the sidebar and enables only when a component is selected.
+
+### Removed
+- **Properties Panel**: Removed the dedicated properties panel from the bottom-left corner to streamline the UI.
 ## [0.3.0] - 2026-01-26
 
 ### Changed

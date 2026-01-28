@@ -12,13 +12,14 @@ This project validates the UX/UI for the visual layout configuration tool descri
 - **Component Management**:
   - **Templates**: Save and Load custom layouts via the **Main Header**.
   - **Library**: Sidebar with "Devices" (Camera, Traces, LEDs) and "Settings".
-  - **Reset**: Instantly clear the workspace (Top of Sidebar).
+  - **Reorderable Settings**: Drag-and-drop support for Application Specific Settings sections.
+  - **Reset**: Instantly clear the workspace (Main Header).
 - **UX & Accessibility**:
   - **Undo/Redo**: Robust history stack with keyboard shortcuts.
   - **Keyboard Resizing**: Fine-tune splitter positions with Arrow keys.
   - **Dark Mode**: Fully themed UI.
   - **Mock Content**: Realistic previews for Cameras and Graphs.
-  - **Properties Panel**: Context-aware settings for selected items.
+  - **Mock Content**: Realistic previews for Cameras and Graphs.
 - **Scientific Aesthetic**: Clean, modern UI using TailwindCSS.
 
 ## � Technical Rules
