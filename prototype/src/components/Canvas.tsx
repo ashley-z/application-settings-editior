@@ -9,6 +9,7 @@ import { CameraComponent } from './CameraComponent';
 import { AppSpec } from './AppSpec';
 import { Traces } from './Traces';
 import { LightSource } from './LightSource';
+import type { AppSpecSettings } from './Sidebar';
 
 // Mock Initial State (Recursive)
 // Mock Initial State (Recursive)
@@ -22,9 +23,11 @@ interface CanvasProps {
         direction: 'horizontal' | 'vertical';
         insertBefore: boolean;
     } | null;
+    appSpecSettings: AppSpecSettings;
+    sectionOrder: string[];
 }
 
-export const Canvas = ({ layout, setLayout, selectedId, onSelect, dragPreview }: CanvasProps) => {
+export const Canvas = ({ layout, setLayout, selectedId, onSelect, dragPreview, appSpecSettings, sectionOrder }: CanvasProps) => {
     // We need refs to measure containers for pixel-to-percent conversion
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +46,7 @@ export const Canvas = ({ layout, setLayout, selectedId, onSelect, dragPreview }:
 
     const renderNode = (node: LayoutNode) => {
         if (node.type === 'component') {
-            return <ComponentCell node={node} key={node.id} selectedId={selectedId} onSelect={onSelect} dragPreview={dragPreview} />;
+            return <ComponentCell node={node} key={node.id} selectedId={selectedId} onSelect={onSelect} dragPreview={dragPreview} appSpecSettings={appSpecSettings} sectionOrder={sectionOrder} />;
         }
 
         const isVertical = node.type === 'row';
@@ -101,9 +104,11 @@ interface ComponentCellProps {
         insertBefore: boolean;
         isReplace?: boolean;
     } | null;
+    appSpecSettings: AppSpecSettings;
+    sectionOrder: string[];
 }
 
-const ComponentCell = ({ node, selectedId, onSelect, dragPreview }: ComponentCellProps) => {
+const ComponentCell = ({ node, selectedId, onSelect, dragPreview, appSpecSettings, sectionOrder }: ComponentCellProps) => {
     const { setNodeRef, isOver } = useDroppable({
         id: node.id,
         data: node
@@ -180,7 +185,7 @@ const ComponentCell = ({ node, selectedId, onSelect, dragPreview }: ComponentCel
                         ) : node.componentType?.includes('LED') ? (
                             <LightSource id={node.id} name={node.componentType || 'LED'} />
                         ) : (
-                            <AppSpec id={node.id} />
+                            <AppSpec id={node.id} appSpecSettings={appSpecSettings} sectionOrder={sectionOrder} />
                         )}
                     </div>
                 </>

@@ -4,16 +4,16 @@ import { Save, LayoutGrid, RotateCcw, RotateCw, Play, Moon, Sun } from 'lucide-r
 interface MainLayoutProps {
     sidebar: React.ReactNode;
     canvas: React.ReactNode;
-    properties: React.ReactNode;
     isDarkMode: boolean;
     toggleTheme: () => void;
     onSave: () => void;
     onUndo?: () => void;
     onRedo?: () => void;
+    onReset?: () => void;
     headerActions?: React.ReactNode;
 }
 
-export const MainLayout = ({ sidebar, canvas, properties, isDarkMode, toggleTheme, onSave, onUndo, onRedo, headerActions }: MainLayoutProps) => {
+export const MainLayout = ({ sidebar, canvas, isDarkMode, toggleTheme, onSave, onUndo, onRedo, onReset, headerActions }: MainLayoutProps) => {
     return (
         <div className="flex flex-col h-screen w-screen bg-background text-foreground overflow-hidden font-sans">
             {/* 1. Header / Toolbar */}
@@ -48,6 +48,14 @@ export const MainLayout = ({ sidebar, canvas, properties, isDarkMode, toggleThem
                 <div className="flex items-center gap-2">
                     {headerActions}
                     <div className="h-6 w-px bg-border mx-2" />
+                    <button
+                        onClick={onReset}
+                        className="h-9 px-3 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 text-sm font-medium transition-colors flex items-center gap-2 border border-border"
+                        title="Reset Canvas"
+                    >
+                        <RotateCcw size={16} />
+                        Reset
+                    </button>
                     <button className="h-9 px-4 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 text-sm font-medium transition-colors flex items-center gap-2">
                         <Play size={16} />
                         Preview
@@ -61,16 +69,10 @@ export const MainLayout = ({ sidebar, canvas, properties, isDarkMode, toggleThem
 
             {/* 2. Main Workspace */}
             <div className="flex-1 flex overflow-hidden">
-                {/* Sidebar (Left) - Contains Library & Properties */}
+                {/* Sidebar (Left) - Contains Library */}
                 <aside className="w-80 border-r border-border bg-card flex flex-col shrink-0">
-                    {/* Top: Component Library */}
-                    <div className="flex-1 min-h-0 flex flex-col border-b border-border">
+                    <div className="flex-1 min-h-0 flex flex-col">
                         {sidebar}
-                    </div>
-
-                    {/* Bottom: Properties Panel */}
-                    <div className="h-1/2 min-h-[300px] flex flex-col">
-                        {properties}
                     </div>
                 </aside>
 

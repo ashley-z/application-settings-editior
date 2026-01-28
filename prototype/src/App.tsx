@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { MainLayout } from './layouts/MainLayout'
-import { Sidebar } from './components/Sidebar'
+import { Sidebar, type AppSpecSettings } from './components/Sidebar'
 import { TemplateControls } from './components/TemplateControls'
-import { PropertiesPanel } from './components/PropertiesPanel'
+
 import { Canvas } from './components/Canvas'
 import { DndContext, DragOverlay, type DragStartEvent, type DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core'
 import type { LayoutNode } from './types/layout';
@@ -31,6 +31,13 @@ function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dragPreview, setDragPreview] = useState<DragPreviewState>(null);
   const [isDarkMode, setIsDarkMode] = useState(false); // Default to Light Mode
+  const [appSpecSettings, setAppSpecSettings] = useState<AppSpecSettings>({
+    camera: { frameRate: false, exposureTime: false, color: '#64748b' },
+    led405: { intensity: false, frequency: false, color: '#1e74ad' },
+    led470: { intensity: false, frequency: false, color: '#439639' },
+    led560: { intensity: false, frequency: false, color: '#d12e1a' }
+  });
+  const [sectionOrder, setSectionOrder] = useState<string[]>(['led405', 'led470', 'led560', 'camera']);
 
   React.useEffect(() => {
     if (isDarkMode) {
@@ -322,7 +329,12 @@ function App() {
       <MainLayout
         sidebar={<Sidebar
           usedTypes={usedComponentTypes}
-          onReset={handleReset}
+          appSpecSettings={appSpecSettings}
+          onAppSpecSettingsChange={setAppSpecSettings}
+          sectionOrder={sectionOrder}
+          onSectionOrderChange={setSectionOrder}
+          selectedId={selectedId}
+          onDelete={handleDelete}
         />}
         headerActions={
           <TemplateControls
@@ -332,13 +344,13 @@ function App() {
             onDeleteTemplate={handleDeleteTemplate}
           />
         }
-        canvas={<Canvas layout={layout} setLayout={updateLayout} selectedId={selectedId} onSelect={setSelectedId} dragPreview={dragPreview} />}
-        properties={<PropertiesPanel selectedId={selectedId} layout={layout} onDelete={handleDelete} />}
+        canvas={<Canvas layout={layout} setLayout={updateLayout} selectedId={selectedId} onSelect={setSelectedId} dragPreview={dragPreview} appSpecSettings={appSpecSettings} sectionOrder={sectionOrder} />}
         isDarkMode={isDarkMode}
         toggleTheme={toggleTheme}
         onSave={handleSave}
         onUndo={handleUndo}
         onRedo={handleRedo}
+        onReset={handleReset}
       />
       <DragOverlay>
         {activeDragItem ? (
